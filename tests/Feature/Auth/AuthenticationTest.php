@@ -51,4 +51,29 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
         $response->assertRedirect('/');
     }
+
+    public function test_inactive_users_cannot_authenticate(): void
+    {
+        $user = User::factory()->inactive()->create();
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertGuest();
+        $response->assertSessionHasErrors('email');
+    }
+
+    public function test_deactivated_users_lose_access_to_existing_session(): void
+    {
+        $user = User::factory()->inactive()->create();
+
+        // Simulate request with deactivated user session
+        $response = $this->actingAs($user)->get('/dashboard');
+
+        // Middleware should log them out and redirect to login
+        $this->assertGuest();
+        $response->assertRedirect(route('login'));
+    }
 }
