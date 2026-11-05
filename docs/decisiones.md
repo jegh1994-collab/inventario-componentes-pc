@@ -15,9 +15,9 @@ Este documento registra las elecciones técnicas y de alcance acordadas para el 
 
 ## Decisión: Suite de Pruebas Automatizadas
 - **Fecha:** 4 de noviembre de 2026
-- **Opción elegida:** Pest PHP.
-- **Motivo:** Sintaxis moderna, expresiva y legible, ideal para mantener alta cobertura en reglas críticas de inventario y permisos.
-- **Efecto en el alcance:** Ninguno. Corre sobre PHPUnit de forma totalmente compatible.
+- **Opción elegida:** PHPUnit puro.
+- **Motivo:** Se descarta Pest para utilizar las clases y métodos estándar de PHPUnit (`TestCase`, `test_*`, `assert*`), manteniendo el código de pruebas en PHP nativo clásico sin abstracciones adicionales.
+- **Efecto en el alcance:** Ninguno. Las pruebas se ejecutan mediante `php artisan test` o `./vendor/bin/phpunit`.
 - **Requiere acuerdo con quien solicita:** No (es una de las dos opciones autorizadas en la guía).
 
 ---
